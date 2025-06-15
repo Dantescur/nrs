@@ -1,0 +1,14 @@
+[package]
+name = "nrs"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4.5.40", features = ["derive"] }
+clap_autocomplete = "0.4.2"
+colored = "3.0.0"
+dirs = "6.0.0"
+reqwest = { version = "0.12.20", features = ["blocking"] }
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.140"
+thiserror = "2.0.12"
