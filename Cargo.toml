@@ -1,15 +1,19 @@
 [package]
-name = "nrs"
+name = "nrs-cli"
 version = "0.1.1-beta.1"
 edition = "2024"
 authors = ["Daniel <cesardaniel.9611@gmail.com>"]
 license = "MIT"
 description = "A CLI written in Rust to manage multiple Node.js registries easily and efficiently."
-respository = "https://github.com/Dantescur/nrs"
+repository = "https://github.com/Dantescur/nrs"
 homepage = "https://github.com/Dantescur/nrs"
 categories = ["command-line-utilities", "development-tools"]
 keywords = ["npm", "registry", "cli", "node", "tool"]
 readme = "README.md"
+
+[[bin]]
+name = "nrs"
+path = "src/main.rs"
 
 [dependencies]
 clap = { version = "4.5.40", features = ["derive"] }
