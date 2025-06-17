@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build and Release
-    runs-on: ubuntu-latest
+    runs-on: ${{ contains(matrix.target, 'apple') && 'macos-latest' || 'ubuntu-latest' }}
 
     strategy:
       fail-fast: true
@@ -30,8 +30,13 @@ jobs:
       - name: Install cross
         run: cargo install cross --git https://github.com/cross-rs/cross
 
-      - name: Build with cross
+      - name: Build
+        if: matrix.target != 'x86_64-apple-darwin'
         run: cross build --release --target ${{ matrix.target }}
+
+      - name: Build (macOS)
+        if: matrix.target == 'x86_64-apple-darwin'
+        run: cargo build --release --target ${{ matrix.target }}
 
       - name: Rename binary
         run: |
@@ -40,7 +45,11 @@ jobs:
             ext=".exe"
           fi
           mkdir -p dist
-          cp target/${{ matrix.target }}/release/nrs dist/nrs-${{ matrix.target }}$ext
+          if [[ "${{ matrix.target }}" == *apple* ]]; then
+            cp target/${{ matrix.target }}/release/nrs dist/nrs-${{ matrix.target }}$ext
+          else
+            cp target/${{ matrix.target }}/release/nrs dist/nrs-${{ matrix.target }}$ext
+          fi
 
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v2
